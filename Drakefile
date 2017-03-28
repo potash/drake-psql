@@ -8,6 +8,7 @@ psql_schema()
     schema=$(basename $(dirname $OUTPUT))
     $PSQL -c "CREATE SCHEMA IF NOT EXISTS $schema" && mkdir -p $(dirname $OUTPUT) && touch $OUTPUT
 
+; use head instead of sniff with csvsql because its much faster
 psql_copy()
     schema=$(basename $(dirname $OUTPUT))
     table=$(basename $OUTPUT)
@@ -21,6 +22,6 @@ psql_copy()
 ; default use 10000 lines for schema type inference
 CSVSQL_LINES:=100000
 ; default do not put constraints on columns
-CSVSQL_OPTIONS:='--no-constraints --no-inference'
+CSVSQL_OPTIONS:='--no-constraints'
 ; default is WITH CSV HEADER
 PSQL_COPY_OPTIONS:='WITH CSV HEADER'
